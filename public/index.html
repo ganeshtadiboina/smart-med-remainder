@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json"> <!-- Link to the manifest file -->
+  <link rel="stylesheet" href="styles.css">
+  <title>Smart Medication Reminder</title>
+</head>
+<body>
+    <h1>Smart Medication Reminder</h1>
+
+    <!-- Breakfast Section -->
+    <div class="meal-section">
+        <h2>Breakfast</h2>
+        <label for="medication">Medication Before Breakfast:</label>
+        <input type="text" id="breakfast-before-med" placeholder="Enter medication name" required>
+
+        <label for="breakfast-after-med">Medication After Breakfast:</label>
+        <input type="text" id="medication" placeholder="Enter medication name" required>
+
+        <label for="meal-time">Breakfast Time:</label>
+        <input type="time" id="meal-time" required>
+        
+        <button id="set-reminder">Set Breakfast Reminder</button>
+    </div>
+
+    <!-- Lunch Section -->
+    <div class="meal-section">
+        <h2>Lunch</h2>
+        <label for="lunch-before-med">Medication Before Lunch:</label>
+        <input type="text" id="medication" placeholder="Enter medication name" required>
+
+        <label for="lunch-after-med">Medication After Lunch:</label>
+        <input type="text" id="medication" placeholder="Enter medication name" required>
+
+        <label for="lunch-time">Lunch Time:</label>
+        <input type="time" id="meal-time" required>
+        
+        <button id="set-reminder" >Set Lunch Reminder</button>
+    </div>
+
+    <!-- Dinner Section -->
+    <div class="meal-section">
+        <h2>Dinner</h2>
+        <label for="dinner-before-med">Medication Before Dinner:</label>
+        <input type="text" id="medication" placeholder="Enter medication name" required>
+
+        <label for="dinner-after-med">Medication After Dinner:</label>
+        <input type="text" id="medication" placeholder="Enter medication name" required>
+
+        <label for="dinner-time">Dinner Time:</label>
+        <input type="time" id="meal-time" required>
+        
+        <button id="set-reminder">Set Dinner Reminder</button>
+    </div>
+
+    <p id="status"></p>
+
+    <script src="script.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }).catch(function(error) {
+          console.log('Service Worker registration failed:', error);
+        });
+      }
+    </script>
+</body>
+</html>

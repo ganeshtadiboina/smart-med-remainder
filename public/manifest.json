@@ -1,0 +1,8 @@
+{
+  "name": "Smart Medication Reminder",
+  "short_name": "MedReminder",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4CAF50"
+}
