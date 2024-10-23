@@ -1,5 +1,5 @@
 // Function to set reminders and display them on the webpage
-function setReminders(mealTimeInput, medicationInput, mealType) {
+function setReminders(mealTimeInput, beforeMedInput, afterMedInput, mealType) {
     const mealTime = new Date();
     const [hour, minute] = mealTimeInput.split(":");
     mealTime.setHours(hour);
@@ -20,22 +20,22 @@ function setReminders(mealTimeInput, medicationInput, mealType) {
     console.log("Current Time:", currentTime);
 
     // Check if the times are in the future and set reminders
-    let remindersHTML = `<p>Reminders for ${mealType} - ${medicationInput}:</p>`;
+    let remindersHTML = `<p>Reminders for ${mealType}:</p>`;
     
     if (beforeMealTime > currentTime) {
         const timeBeforeMeal = beforeMealTime - currentTime;
-        console.log(`Setting reminder for ${medicationInput} before ${mealType} meal in ${timeBeforeMeal / 60000} minutes.`);
-        setTimeout(() => sendNotification(`Take your ${medicationInput} before ${mealType}!`), timeBeforeMeal);
-        remindersHTML += `<p>Reminder set for taking ${medicationInput} before ${mealType} at ${beforeMealTime.toLocaleTimeString()}.</p>`;
+        console.log(`Setting reminder for ${beforeMedInput} before ${mealType} in ${timeBeforeMeal / 60000} minutes.`);
+        setTimeout(() => sendNotification(`Take your ${beforeMedInput} before ${mealType}!`), timeBeforeMeal);
+        remindersHTML += `<p>Reminder set for taking ${beforeMedInput} before ${mealType} at ${beforeMealTime.toLocaleTimeString()}.</p>`;
     } else {
         console.log(`Before ${mealType} meal time is in the past.`);
     }
 
     if (afterMealTime > currentTime) {
         const timeAfterMeal = afterMealTime - currentTime;
-        console.log(`Setting reminder for ${medicationInput} after ${mealType} meal in ${timeAfterMeal / 60000} minutes.`);
-        setTimeout(() => sendNotification(`Take your ${medicationInput} after ${mealType}!`), timeAfterMeal);
-        remindersHTML += `<p>Reminder set for taking ${medicationInput} after ${mealType} at ${afterMealTime.toLocaleTimeString()}.</p>`;
+        console.log(`Setting reminder for ${afterMedInput} after ${mealType} in ${timeAfterMeal / 60000} minutes.`);
+        setTimeout(() => sendNotification(`Take your ${afterMedInput} after ${mealType}!`), timeAfterMeal);
+        remindersHTML += `<p>Reminder set for taking ${afterMedInput} after ${mealType} at ${afterMealTime.toLocaleTimeString()}.</p>`;
     } else {
         console.log(`After ${mealType} meal time is in the past.`);
     }
@@ -61,15 +61,51 @@ function sendNotification(message) {
 }
 
 // Set up event listeners for the buttons
-document.getElementById('set-reminder').addEventListener('click', function() {
-    const mealTimeInput = document.getElementById('meal-time').value;
-    const medicationInput = document.getElementById('medication').value;
-    
-    console.log("Meal Time Input:", mealTimeInput);  // Log the meal time input value
-    console.log("Medication Input:", medicationInput);  // Log the medication input value
+document.getElementById('set-breakfast-reminder').addEventListener('click', function() {
+    const mealTimeInput = document.getElementById('breakfast-time').value;
+    const beforeMedInput = document.getElementById('breakfast-before-med').value;
+    const afterMedInput = document.getElementById('breakfast-after-med').value;
 
-    if (mealTimeInput && medicationInput) {
-        setReminders(mealTimeInput, medicationInput, 'Breakfast');
+    console.log("Meal Time Input (Breakfast):", mealTimeInput);  // Log the meal time input value
+    console.log("Medication Before Breakfast Input:", beforeMedInput);  // Log the medication input value
+    console.log("Medication After Breakfast Input:", afterMedInput);  // Log the medication input value
+
+    if (mealTimeInput && beforeMedInput && afterMedInput) {
+        setReminders(mealTimeInput, beforeMedInput, afterMedInput, 'Breakfast');
+    } else {
+        document.getElementById('status').innerText = "Please fill out all fields.";
+        console.log("Please fill out all fields.");
+    }
+});
+
+document.getElementById('set-lunch-reminder').addEventListener('click', function() {
+    const mealTimeInput = document.getElementById('lunch-time').value;
+    const beforeMedInput = document.getElementById('lunch-before-med').value;
+    const afterMedInput = document.getElementById('lunch-after-med').value;
+
+    console.log("Meal Time Input (Lunch):", mealTimeInput);  // Log the meal time input value
+    console.log("Medication Before Lunch Input:", beforeMedInput);  // Log the medication input value
+    console.log("Medication After Lunch Input:", afterMedInput);  // Log the medication input value
+
+    if (mealTimeInput && beforeMedInput && afterMedInput) {
+        setReminders(mealTimeInput, beforeMedInput, afterMedInput, 'Lunch');
+    } else {
+        document.getElementById('status').innerText = "Please fill out all fields.";
+        console.log("Please fill out all fields.");
+    }
+});
+
+document.getElementById('set-dinner-reminder').addEventListener('click', function() {
+    const mealTimeInput = document.getElementById('dinner-time').value;
+    const beforeMedInput = document.getElementById('dinner-before-med').value;
+    const afterMedInput = document.getElementById('dinner-after-med').value;
+
+    console.log("Meal Time Input (Dinner):", mealTimeInput);  // Log the meal time input value
+    console.log("Medication Before Dinner Input:", beforeMedInput);  // Log the medication input value
+    console.log("Medication After Dinner Input:", afterMedInput);  // Log the medication input value
+
+    if (mealTimeInput && beforeMedInput && afterMedInput) {
+        setReminders(mealTimeInput, beforeMedInput, afterMedInput, 'Dinner');
     } else {
         document.getElementById('status').innerText = "Please fill out all fields.";
         console.log("Please fill out all fields.");
@@ -77,4 +113,10 @@ document.getElementById('set-reminder').addEventListener('click', function() {
 });
 
 // Subscribe the user to push notifications on page load
-subscribeUserToPush();
+if ('Notification' in window && navigator.serviceWorker) {
+    Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+            console.log('Notification permission granted.');
+        }
+    });
+}
